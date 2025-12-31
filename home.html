@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaaniPay - Advanced Utilities Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+    <link rel="icon" type="image/png" href="laani.png">
+    <style>
+        :root {
+            --primary: #0052ff;
+            --primary-dark: #0041cc;
+            --secondary: #00d4aa;
+            --accent: #ff6b6b;
+            --dark: #0a2540;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --shadow: 0 10px 40px rgba(0, 82, 255, 0.1);
+            --shadow-3d: 0 20px 60px rgba(0, 0, 0, 0.2);
+            --radius: 16px;
+            --blur-bg: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f5ff 0%, #e6f0ff 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 82, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 15s ease-in-out infinite alternate;
+        }
+
+        /* Header with 3D effect */
+        header {
+            background: var(--blur-bg);
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-3d);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateZ(20px);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: logoFloat 3s ease-in-out infinite;
+            border: 3px solid white;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: logoShine 3s infinite;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px) translateZ(10px);
+            box-shadow: 0 12px 30px rgba(0, 82, 255, 0.3);
+            color: white;
+        }
+
+        .nav-btn:hover::before {
+            opacity: 1;
+        }
+
+        .nav-btn i {
+            margin-right: 8px;
+        }
+
+        /* Hero Section - Updated Layout */
+        .hero {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 20px rgba(0, 82, 255, 0.3); }
+            to { text-shadow: 0 0 30px rgba(0, 212, 170, 0.3); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Utilities and Card Section - Inline Layout */
+        .utilities-card-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin: 3rem auto;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+
+        /* Utility Meters */
+        .utility-meters {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .meter {
+            background: var(--blur-bg);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 280px;
+        }
+
+        .meter:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+
+        .meter-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .meter-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .meter-progress {
+            height: 10px;
+            background: rgba(226, 232, 240, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        /* 3D Card */
+        .card-3d-container {
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            width: 380px;
+            height: 240px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            animation: card3dFloat 6s ease-in-out infinite;
+        }
+
+        .card-3d:hover {
+            animation-play-state: paused;
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            padding: 1.8rem;
+            backface-visibility: hidden;
+            box-shadow: var(--shadow-3d);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, rgba(26, 42, 108, 0.9), rgba(42, 62, 177, 0.9), rgba(67, 97, 238, 0.9));
+            color: white;
+            transform: rotateY(0deg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.9), rgba(22, 33, 62, 0.9));
+            color: white;
+            transform: rotateY(180deg);
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-back .magnetic-strip {
+            width: 100%;
+            height: 40px;
+            background: #1a1a1a;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .card-back .signature {
+            width: 80%;
+            height: 40px;
+            background: repeating-linear-gradient(0deg, white, white 3px, #f0f0f0 3px, #f0f0f0 6px);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .card-back .cvv {
+            background: white;
+            color: var(--dark);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            align-self: flex-end;
+        }
+
+        .card-chip {
+            width: 60px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffd700, #ffec8b);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-chip::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: chipShine 3s infinite;
+        }
+
+        .card-number {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .card-type {
+            position: absolute;
+            top: 1.8rem;
+            right: 1.8rem;
+            font-size: 1.8rem;
+        }
+
+        /* Animated Buttons */
+        .btn-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform-style: preserve-3d;
+            backdrop-filter: blur(5px);
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 82, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 82, 255, 0.3);
+        }
+
+        /* Dashboard with 3D Cards */
+        .dashboard {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+            animation: linePulse 2s ease-in-out infinite;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .dashboard-card {
+            background: var(--blur-bg);
+            border-radius: var(--radius);
+            padding: 1.6rem;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-12px) rotateX(5deg) scale(1.02);
+            box-shadow: var(--shadow-3d);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateZ(20px);
+            backdrop-filter: blur(5px);
+        }
+
+        .icon-1 { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .icon-2 { background: linear-gradient(135deg, #4ecdc4, #6ae2da); }
+        .icon-3 { background: linear-gradient(135deg, #ffe66d, #ffef9f); }
+        .icon-4 { background: linear-gradient(135deg, #9d65c9, #b185db); }
+
+        .balance {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        /* Airtime Network Buttons - All in One Line */
+        .airtime-networks-container {
+            margin: 0.8rem 0;
+        }
+
+        .airtime-networks {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .network-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 12px;
+            width: 70px;
+        }
+
+        .network-btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .network-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .network-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: networkFloat 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 6px;
+        }
+
+        .network-logo::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            z-index: -1;
+            animation: networkGlow 2s ease-in-out infinite;
+        }
+
+        .network-btn:nth-child(1) .network-logo { 
+            background: linear-gradient(135deg, #ff0000, #ff6666); /* Airtel */
+            animation-delay: 0s;
+        }
+        .network-btn:nth-child(1) .network-logo::after {
+            background: linear-gradient(135deg, #ff0000, #ff6666);
+        }
+        
+        .network-btn:nth-child(2) .network-logo { 
+            background: linear-gradient(135deg, #ffcc00, #ffdd44); /* MTN */
+            animation-delay: 0.5s;
+        }
+        .network-btn:nth-child(2) .network-logo::after {
+            background: linear-gradient(135deg, #ffcc00, #ffdd44);
+        }
+        
+        .network-btn:nth-child(3) .network-logo { 
+            background: linear-gradient(135deg, #00cc00, #00dd44); /* Glo */
+            animation-delay: 1s;
+        }
+        .network-btn:nth-child(3) .network-logo::after {
+            background: linear-gradient(135deg, #00cc00, #00dd44);
+        }
+        
+        .network-btn:nth-child(4) .network-logo { 
+            background: linear-gradient(135deg, #0066cc, #0088ff); /* 9mobile */
+            animation-delay: 1.5s;
+        }
+        .network-btn:nth-child(4) .network-logo::after {
+            background: linear-gradient(135deg, #0066cc, #0088ff);
+        }
+
+        .network-text {
+            font-size: 0.7rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Airtime Purchase Form */
+        .airtime-form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .amount-btn {
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .amount-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .amount-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Payment Gateway Section */
+        .payment-section {
+            background: var(--blur-bg);
+            border-radius: var(--radius);
+            padding: 3rem;
+            margin: 4rem auto;
+            max-width: 1400px;
+            box-shadow: var(--shadow-3d);
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateX(1deg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: sectionFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes sectionFloat {
+            0%, 100% { transform: perspective(1000px) rotateX(1deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateX(1deg) translateY(-10px); }
+        }
+
+        .gateway-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .gateway-logo {
+            width: 120px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            backdrop-filter: blur(5px);
+        }
+
+        .gateway-logo:hover {
+            transform: translateY(-10px) translateZ(20px) rotateY(180deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .stripe { color: #5433FF; }
+        .paypal { color: #003087; }
+        .visa { color: #1a1f71; }
+        .mastercard { color: #eb001b; }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 37, 64, 0.9);
+            color: white;
+            padding: 4rem 3rem 2rem;
+            margin-top: 4rem;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-5px) rotate(10deg);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes backgroundShift {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.2) rotate(180deg); }
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes logoShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes card3dFloat {
+            0%, 100% { transform: rotateY(-10deg) translateY(0); }
+            50% { transform: rotateY(10deg) translateY(-20px); }
+        }
+
+        @keyframes chipShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes networkFloat {
+            0%, 100% { transform: translateY(0) rotateY(0); }
+            50% { transform: translateY(-8px) rotateY(180deg); }
+        }
+
+        @keyframes networkGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes linePulse {
+            0%, 100% { width: 100%; }
+            50% { width: 80%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .utilities-card-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .utility-meters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .airtime-networks {
+                gap: 0.3rem;
+            }
+            
+            .network-btn {
+                width: 65px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .card-3d {
+                width: 320px;
+                height: 200px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-card {
+                height: auto;
+                min-height: 350px;
+            }
+            
+            .meter {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .airtime-networks {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .network-btn {
+                width: 60px;
+            }
+        }
+
+        /* Services Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--blur-bg);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: modalAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        @keyframes modalAppear {
+            from { opacity: 0; transform: translateY(50px) rotateX(-20deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            transition: color 0.3s ease;
+            z-index: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="laani.png" alt="LaaniPay Logo">
+            </div>
+            <div class="logo-text">LaaniPay</div>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-btn" id="loginSubmitBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button class="nav-btn" id="signupSubmitBtn"><i class="fas fa-user-plus"></i> Sign Up</button>
+            <button class="nav-btn" id="servicesBtn"><i class="fas fa-bolt"></i> Services</button>
+            <button class="nav-btn" id="aboutBtn"><i class="fas fa-info-circle"></i> About</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">Next-Gen Utilities Banking Platform</h1>
+        <p class="hero-subtitle">LaaniPay revolutionizes how you manage utilities payments. Deposit funds, generate secure virtual cards, and connect with global payment gateways like Stripe for seamless transactions.</p>
+        
+        <div class="btn-container">
+            <button class="btn btn-primary" id="startBankingBtn">
+                <i class="fas fa-play-circle"></i> Start Banking
+            </button>
+            <button class="btn btn-secondary" id="watchDemoBtn">
+                <i class="fas fa-video"></i> Watch Demo
+            </button>
+        </div>
+    </section>
+
+    <!-- Utilities and Card Section -->
+    <section class="utilities-card-section">
+        <!-- Utility Meters - Electricity and Internet only -->
+        <div class="utility-meters">
+            <div class="meter">
+                <div class="meter-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Electricity</h3>
+                <div class="meter-value">$245.80</div>
+                <div class="meter-progress">
+                    <div class="meter-fill" style="width: 75%"></div>
+                </div>
+                <p>Due in 15 days</p>
+            </div>
+            <div class="meter">
+                <div class="meter-icon"><i class="fas fa-wifi"></i></div>
+                <h3>Internet</h3>
+                <div class="meter-value">$65.00</div>
+                <div class="meter-progress">
+                    <div class="meter-fill" style="width: 90%"></div>
+                </div>
+                <p>Due in 5 days</p>
+            </div>
+        </div>
+        
+        <!-- 3D Card -->
+        <div class="card-3d-container">
+            <div class="card-3d" id="card3d">
+                <div class="card-front">
+                    <div class="card-chip"></div>
+                    <div class="card-number">4542 7812 3456 7890</div>
+                    <div class="card-details">
+                        <div class="card-holder">LAANI PAY</div>
+                        <div class="card-expiry">08/28</div>
+                    </div>
+                    <div class="card-type">
+                        <i class="fab fa-cc-visa"></i>
+                    </div>
+                </div>
+                <div class="card-back">
+                    <div class="magnetic-strip"></div>
+                    <div class="signature"></div>
+                    <div class="cvv">CVV: 123</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+        <h2 class="section-title">Banking Services</h2>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 style="font-size: 1.2rem;">Account Balance</h3>
+                    <div class="card-icon icon-1">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="balance">$4,250.80</div>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.2rem;">Available for utilities & payments</p>
+                <button class="btn btn-primary" id="depositBtn" style="margin-top: auto; padding: 12px 20px; font-size: 0.9rem; width: 100%;">
+                    <i class="fas fa-plus-circle"></i> Add Funds
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 style="font-size: 1.2rem;">Virtual Cards</h3>
+                    <div class="card-icon icon-2">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.2rem;">Generate secure virtual cards instantly</p>
+                <button class="btn btn-secondary" id="generateCardBtn" style="margin-top: auto; padding: 12px 20px; font-size: 0.9rem; width: 100%;">
+                    <i class="fas fa-plus"></i> New Card
+                </button>
+                <div style="margin-top: 1rem; font-size: 0.8rem; color: rgba(0, 0, 0, 0.7);">
+                    <i class="fas fa-shield-alt" style="color: var(--secondary);"></i> PCI-DSS Compliant
+                </div>
+            </div>
+
+            <!-- Airtime & Data Card -->
+            <div class="dashboard-card" id="airtimeCard">
+                <div class="card-header">
+                    <h3 style="font-size: 1.2rem;">Airtime & Data</h3>
+                    <div class="card-icon icon-3">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.5rem;">Recharge airtime & data for all networks</p>
+                
+                <!-- Network Buttons - All in One Line -->
+                <div class="airtime-networks-container">
+                    <div class="airtime-networks">
+                        <button class="network-btn" data-network="airtel">
+                            <div class="network-logo">
+                                <i class="fas fa-signal"></i>
+                            </div>
+                            <div class="network-text">Airtel</div>
+                        </button>
+                        <button class="network-btn" data-network="mtn">
+                            <div class="network-logo">
+                                <i class="fas fa-broadcast-tower"></i>
+                            </div>
+                            <div class="network-text">MTN</div>
+                        </button>
+                        <button class="network-btn" data-network="glo">
+                            <div class="network-logo">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="network-text">Glo</div>
+                        </button>
+                        <button class="network-btn" data-network="9mobile">
+                            <div class="network-logo">
+                                <i class="fas fa-sim-card"></i>
+                            </div>
+                            <div class="network-text">9mobile</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Airtime Purchase Form (Initially Hidden) -->
+                <div class="airtime-form" id="airtimeForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" class="form-control" id="phoneNumber" placeholder="0800 123 4567" maxlength="11">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Amount (₦)</label>
+                        <input type="number" class="form-control" id="amount" placeholder="1000" min="50" max="10000">
+                        
+                        <div class="amount-options">
+                            <button class="amount-btn" data-amount="100">₦100</button>
+                            <button class="amount-btn" data-amount="200">₦200</button>
+                            <button class="amount-btn" data-amount="500">₦500</button>
+                            <button class="amount-btn active" data-amount="1000">₦1,000</button>
+                            <button class="amount-btn" data-amount="2000">₦2,000</button>
+                            <button class="amount-btn" data-amount="5000">₦5,000</button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="purchaseAirtimeBtn" style="width: 100%; padding: 12px; margin-top: 0.5rem;">
+                        <i class="fas fa-shopping-cart"></i> Buy Airtime Now
+                    </button>
+                </div>
+
+                <!-- Buy Airtime Button (Initial State) -->
+                <button class="btn btn-primary" id="showAirtimeFormBtn" style="margin-top: auto; padding: 12px 20px; font-size: 0.9rem; width: 100%;">
+                    <i class="fas fa-shopping-cart"></i> Buy Airtime
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 style="font-size: 1.2rem;">Pay Utilities</h3>
+                    <div class="card-icon icon-4">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.2rem;">Pay all your bills in one place</p>
+                <button class="btn btn-primary" id="payUtilitiesBtn" style="margin-top: auto; padding: 12px 20px; font-size: 0.9rem; width: 100%;">
+                    <i class="fas fa-bolt"></i> Pay Now
+                </button>
+                <div style="margin-top: 1rem; font-size: 0.8rem; color: rgba(0, 0, 0, 0.7);">
+                    <i class="fas fa-check-circle" style="color: var(--accent);"></i> Auto-pay available
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Gateways -->
+        <div class="payment-section">
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--dark);">Secure Payment Gateways</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 2rem;">Connected to the world's most trusted payment processors</p>
+            
+            <div class="gateway-logos">
+                <div class="gateway-logo stripe">
+                    <i class="fab fa-stripe"></i>
+                </div>
+                <div class="gateway-logo paypal">
+                    <i class="fab fa-paypal"></i>
+                </div>
+                <div class="gateway-logo visa">
+                    <i class="fab fa-cc-visa"></i>
+                </div>
+                <div class="gateway-logo mastercard">
+                    <i class="fab fa-cc-mastercard"></i>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 2rem; color: #64748b; font-size: 0.9rem;">
+                <i class="fas fa-lock"></i> All transactions are encrypted with 256-bit SSL security
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>LaaniPay</h3>
+                <p>The future of utilities banking. Secure, fast, and reliable payment solutions for all your utility needs.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p>Utilities Payment</p>
+                <p>Virtual Card Generation</p>
+                <p>Airtime & Data</p>
+                <p>Bill Management</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 456 Finance District</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> support@laanipay.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Security</h3>
+                <p><i class="fas fa-shield-alt"></i> PCI DSS Level 1</p>
+                <p><i class="fas fa-lock"></i> 256-bit Encryption</p>
+                <p><i class="fas fa-user-shield"></i> Fraud Protection</p>
+                <p><i class="fas fa-check-circle"></i> GDPR Compliant</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 LaaniPay. All rights reserved. | Secure Utilities Banking Platform
+        </div>
+    </footer>
+
+    <!-- ========== ADDED MISSING MODALS ========== -->
+    
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeLoginModal">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: white;">Login to LaaniPay</h2>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <input type="email" class="form-control" id="loginEmail" placeholder="Email Address" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <input type="password" class="form-control" id="loginPassword" placeholder="Password" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white;">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; padding: 14px;">Login to Dashboard</button>
+            <p style="text-align: center; margin-top: 1.5rem; color: rgba(255, 255, 255, 0.7);">
+                New to LaaniPay? <a href="#" style="color: var(--secondary); font-weight: 600;" id="signupFromLogin">Create Account</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeSignupModal">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: white;">Join LaaniPay</h2>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <input type="text" class="form-control" id="signupName" placeholder="Full Name" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <input type="email" class="form-control" id="signupEmail" placeholder="Email Address" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <input type="password" class="form-control" id="signupPassword" placeholder="Create Password" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white;">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; padding: 14px;">Create Free Account</button>
+            <p style="text-align: center; margin-top: 1.5rem; color: rgba(255, 255, 255, 0.7);">
+                Already have an account? <a href="#" style="color: var(--secondary); font-weight: 600;" id="loginFromSignup">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Services Modal -->
+    <div class="modal" id="servicesModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeServicesModal">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: white; text-align: center;">LaaniPay Services</h2>
+            <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
+                Discover our comprehensive range of utilities banking services designed to simplify your financial life
+            </p>
+            
+            <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="service-icon" style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="service-title" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: white;">Utilities Payment</h3>
+                    <p class="service-desc" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.5;">Pay electricity, water, gas, and internet bills instantly from one platform.</p>
+                </div>
+                
+                <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="service-icon" style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="service-title" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: white;">Virtual Cards</h3>
+                    <p class="service-desc" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.5;">Generate secure virtual cards for online shopping and subscriptions.</p>
+                </div>
+                
+                <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="service-icon" style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: white;">Airtime & Data</h3>
+                    <p class="service-desc" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.5;">Recharge airtime and buy data bundles for all major networks instantly.</p>
+                </div>
+                
+                <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="service-icon" style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3 class="service-title" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: white;">Fund Management</h3>
+                    <p class="service-desc" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.5;">Deposit, withdraw, and manage your funds with real-time tracking.</p>
+                </div>
+                
+                <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="service-icon" style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="service-title" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: white;">Secure Payments</h3>
+                    <p class="service-desc" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.5;">Bank-level security with Stripe integration for all transactions.</p>
+                </div>
+                
+                <div class="service-card" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="service-icon" style="font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: white;">Spending Analytics</h3>
+                    <p class="service-desc" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.5;">Track and analyze your utility spending patterns with detailed reports.</p>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%; margin-top: 2rem; padding: 16px;">
+                <i class="fas fa-rocket"></i> Get Started with All Services
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const loginBtn = document.getElementById('loginSubmitBtn');
+        const signupBtn = document.getElementById('signupSubmitBtn');
+        const servicesBtn = document.getElementById('servicesBtn');
+        const aboutBtn = document.getElementById('aboutBtn');
+        const startBankingBtn = document.getElementById('startBankingBtn');
+        const watchDemoBtn = document.getElementById('watchDemoBtn');
+        const depositBtn = document.getElementById('depositBtn');
+        const generateCardBtn = document.getElementById('generateCardBtn');
+        const payUtilitiesBtn = document.getElementById('payUtilitiesBtn');
+        const showAirtimeFormBtn = document.getElementById('showAirtimeFormBtn');
+        const purchaseAirtimeBtn = document.getElementById('purchaseAirtimeBtn');
+        const airtimeForm = document.getElementById('airtimeForm');
+        const networkButtons = document.querySelectorAll('.network-btn');
+        const amountButtons = document.querySelectorAll('.amount-btn');
+        
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const servicesModal = document.getElementById('servicesModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const closeServicesModal = document.getElementById('closeServicesModal');
+        const signupFromLogin = document.getElementById('signupFromLogin');
+        const loginFromSignup = document.getElementById('loginFromSignup');
+        const card3d = document.getElementById('card3d');
+
+        // Airtime Purchase Functionality
+        let selectedNetwork = 'airtel';
+        let selectedAmount = 1000;
+
+        // Show/Hide Airtime Form
+        showAirtimeFormBtn.addEventListener('click', () => {
+            airtimeForm.style.display = 'block';
+            showAirtimeFormBtn.style.display = 'none';
+            
+            // Auto-focus phone number field
+            document.getElementById('phoneNumber').focus();
+        });
+
+        // Network Selection
+        networkButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                networkButtons.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Update selected network
+                selectedNetwork = btn.getAttribute('data-network');
+                
+                // Update form with network info
+                const networkNames = {
+                    airtel: 'Airtel',
+                    mtn: 'MTN',
+                    glo: 'Glo',
+                    '9mobile': '9mobile'
+                };
+                
+                console.log(`Selected network: ${networkNames[selectedNetwork]}`);
+            });
+        });
+
+        // Amount Selection
+        amountButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                amountButtons.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Update selected amount
+                selectedAmount = parseInt(btn.getAttribute('data-amount'));
+                
+                // Update amount input field
+                document.getElementById('amount').value = selectedAmount;
+                
+                console.log(`Selected amount: ₦${selectedAmount}`);
+            });
+        });
+
+        // Purchase Airtime
+        purchaseAirtimeBtn.addEventListener('click', () => {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const amount = document.getElementById('amount').value;
+            
+            if (!phoneNumber || phoneNumber.length < 11) {
+                alert('Please enter a valid 11-digit phone number');
+                return;
+            }
+            
+            if (!amount || amount < 50 || amount > 10000) {
+                alert('Please enter a valid amount between ₦50 and ₦10,000');
+                return;
+            }
+            
+            const networkNames = {
+                airtel: 'Airtel',
+                mtn: 'MTN',
+                glo: 'Glo',
+                '9mobile': '9mobile'
+            };
+            
+            const formattedPhone = phoneNumber.replace(/(\d{4})(\d{3})(\d{4})/, '$1 $2 $3');
+            
+            // Show success message
+            alert(`✅ Success!\n\n${networkNames[selectedNetwork]} recharge of ₦${amount} for ${formattedPhone} completed successfully!\n\nThe airtime will be credited to your phone within 60 seconds.`);
+            
+            // Reset form
+            airtimeForm.style.display = 'none';
+            showAirtimeFormBtn.style.display = 'block';
+            document.getElementById('phoneNumber').value = '';
+            document.getElementById('amount').value = '1000';
+            
+            // Reset amount buttons
+            amountButtons.forEach(btn => btn.classList.remove('active'));
+            amountButtons[3].classList.add('active'); // Select ₦1,000 by default
+        });
+
+        // 3D Card Flip Effect
+        card3d.addEventListener('click', function() {
+            this.style.transform = this.style.transform === 'rotateY(180deg)' ? 'rotateY(-10deg)' : 'rotateY(180deg)';
+        });
+
+        // 3D Card Mouse Move Effect
+        card3d.addEventListener('mousemove', function(e) {
+            const cardRect = this.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const cardCenterY = cardRect.top + cardRect.height / 2;
+            
+            const mouseX = e.clientX - cardCenterX;
+            const mouseY = e.clientY - cardCenterY;
+            
+            const rotateY = mouseX / 20;
+            const rotateX = -mouseY / 20;
+            
+            this.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        card3d.addEventListener('mouseleave', function() {
+            this.style.transform = 'rotateY(-10deg)';
+        });
+
+        // Modal Functions - NOW THEY WILL WORK!
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+
+        signupBtn.addEventListener('click', () => {
+            signupModal.style.display = 'flex';
+        });
+
+        servicesBtn.addEventListener('click', () => {
+            servicesModal.style.display = 'flex';
+        });
+
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+
+        closeSignupModal.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+        });
+
+        closeServicesModal.addEventListener('click', () => {
+            servicesModal.style.display = 'none';
+        });
+
+        signupFromLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        });
+
+        loginFromSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        });
+
+        // About Button functionality
+        aboutBtn.addEventListener('click', () => {
+            alert('About LaaniPay:\n\nLaaniPay is a next-generation utilities banking platform founded in 2020. We combine cutting-edge financial technology with user-friendly design to revolutionize how people manage and pay for utilities. Our platform is trusted by over 500,000 users worldwide.');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) loginModal.style.display = 'none';
+            if (e.target === signupModal) signupModal.style.display = 'none';
+            if (e.target === servicesModal) servicesModal.style.display = 'none';
+        });
+
+        // Dashboard Button Actions
+        startBankingBtn.addEventListener('click', () => {
+            alert('Welcome to LaaniPay Banking! Your secure utilities banking journey starts now.');
+            signupModal.style.display = 'flex';
+        });
+
+        watchDemoBtn.addEventListener('click', () => {
+            alert('Launching LaaniPay demo video...');
+            // In a real app, this would open a video player
+        });
+
+        depositBtn.addEventListener('click', () => {
+            const amount = prompt('Enter deposit amount ($):', '500');
+            if (amount && !isNaN(amount) && amount > 0) {
+                alert(`Successfully deposited $${amount} to your LaaniPay account!`);
+            }
+        });
+
+        generateCardBtn.addEventListener('click', () => {
+            const cardType = ['Visa', 'Mastercard', 'Amex'][Math.floor(Math.random() * 3)];
+            const cardNumber = '**** **** **** ' + Math.floor(1000 + Math.random() * 9000);
+            const expiry = `${Math.floor(Math.random() * 12) + 1}/${Math.floor(Math.random() * 10) + 24}`;
+            
+            alert(`New Virtual Card Generated!\n\nType: ${cardType}\nNumber: ${cardNumber}\nExpiry: ${expiry}\n\nYour card is now active and ready to use with Stripe integration.`);
+        });
+
+        payUtilitiesBtn.addEventListener('click', () => {
+            alert('Opening Utilities Payment Portal...\n\nYou can now pay your electricity, water, internet, and other utility bills securely.');
+        });
+
+        // Animated button effects
+        const buttons = document.querySelectorAll('.btn, .nav-btn, .network-btn');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('network-btn')) {
+                    this.style.transform = 'translateY(-8px) scale(1.05)';
+                }
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('network-btn')) {
+                    this.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        });
+
+        // Animate utility meters on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'pulse 2s ease';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.meter, .dashboard-card, .network-logo').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Simulate live balance updates
+        setInterval(() => {
+            // In a real app, this would fetch from an API
+            console.log('LaaniPay: Checking for account updates...');
+        }, 30000);
+
+// Start Banking Button - Signup Only
+startBankingBtn.addEventListener('click', () => {
+    signupModal.style.display = 'flex';
+});
+
+
+
+
+  
+
+
+    // Redirect function (one rule for both login & signup)
+    function goToDashboard() {
+        window.location.href = 'dashboard.html';
+    }
+
+    // LOGIN → Dashboard
+    document.getElementById('loginSubmitBtn').addEventListener('click', () => {
+        goToDashboard();
+    });
+
+    // SIGNUP → Dashboard
+    document.getElementById('signupSubmitBtn').addEventListener('click', () => {
+        goToDashboard();
+    });
+
+// Redirect to Login Page
+loginBtn.addEventListener('click', () => {
+    window.location.href = 'login.html';
+});
+
+signupBtn.addEventListener('click', () => {
+    window.location.href = 'login.html';
+});
+
+startBankingBtn.addEventListener('click', () => {
+    window.location.href = 'login.html';
+});
+
+
+    </script>
+</body>
+</html>

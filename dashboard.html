@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | LaaniPay</title>
+    <link rel="icon" type="image/png" href="laani.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary-blue: #0ea5e9;
+            --accent-blue: #06b6d4;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-role {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            padding: 2rem 0;
+        }
+
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .welcome-section p {
+            color: var(--text-medium);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--primary-blue);
+        }
+
+        /* Wallet Section */
+        .wallet-balance {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .balance-label {
+            text-align: center;
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+        }
+
+        .wallet-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--light-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Profile Section */
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-field:last-child {
+            border-bottom: none;
+        }
+
+        .field-label {
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+
+        .field-value {
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* Transactions */
+        .transactions-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: white;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .transactions-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .transactions-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .transactions-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .transactions-list::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 10px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            background: var(--light-bg);
+            border-left: 4px solid transparent;
+        }
+
+        .transaction-item.credit {
+            border-left-color: var(--success);
+        }
+
+        .transaction-item.debit {
+            border-left-color: var(--danger);
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .transaction-icon.credit {
+            background: var(--success);
+        }
+
+        .transaction-icon.debit {
+            background: var(--danger);
+        }
+
+        .transaction-details h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .transaction-details p {
+            font-size: 12px;
+            color: var(--text-medium);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .transaction-amount.credit {
+            color: var(--success);
+        }
+
+        .transaction-amount.debit {
+            color: var(--danger);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-info h4 {
+            font-size: 12px;
+            color: var(--text-medium);
+            margin-bottom: 4px;
+        }
+
+        .stat-info p {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quick-action-btn {
+            padding: 12px;
+            border-radius: var(--radius-md);
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--light-bg);
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #d1fae5;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-content h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .notification-content p {
+            font-size: 12px;
+            color: var(--text-medium);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-medium);
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                gap: 1rem;
+            }
+            
+            .wallet-actions,
+            .quick-actions,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+            
+            .wallet-balance {
+                font-size: 36px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 1rem;
+            }
+            
+            .wallet-balance {
+                font-size: 32px;
+            }
+            
+            .btn {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="notification-content">
+            <h4 id="notification-title">Success</h4>
+            <p id="notification-message">Operation completed successfully</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <div class="logo-text">LaaniPay</div>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-info">
+                        <div class="user-name">John Doe</div>
+                        <div class="user-role">Premium User</div>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <main class="dashboard container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h1>Welcome back, John! 👋</h1>
+            <p>Here's your financial overview for today</p>
+        </section>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Wallet Card -->
+                <section class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-wallet"></i> Wallet Balance
+                        </h3>
+                    </div>
+                    
+                    <div class="wallet-balance">$4,250.80</div>
+                    <p class="balance-label">Available Balance</p>
+                    
+                    <div class="wallet-actions">
+                        <button class="btn btn-primary" id="fundWalletBtn">
+                            <i class="fas fa-plus-circle"></i> Fund Wallet
+                        </button>
+                        <button class="btn btn-secondary" id="buyAirtimeBtn">
+                            <i class="fas fa-mobile-alt"></i> Buy Airtime
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Profile Card -->
+                <section class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-user-circle"></i> Profile
+                        </h3>
+                        <button class="btn btn-secondary" id="editProfileBtn" style="padding: 8px 16px;">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <div class="profile-field">
+                            <span class="field-label">Full Name</span>
+                            <span class="field-value">John Doe</span>
+                        </div>
+                        <div class="profile-field">
+                            <span class="field-label">Email</span>
+                            <span class="field-value">john@example.com</span>
+                        </div>
+                        <div class="profile-field">
+                            <span class="field-label">Phone</span>
+                            <span class="field-value">+1 (234) 567-8900</span>
+                        </div>
+                        <div class="profile-field">
+                            <span class="field-label">Account Type</span>
+                            <span class="field-value">Premium</span>
+                        </div>
+                        <div class="profile-field">
+                            <span class="field-label">Member Since</span>
+                            <span class="field-value">Jan 15, 2022</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Stats -->
+                <section class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-line"></i> Statistics
+                        </h3>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Monthly Spend</h4>
+                                <p>$1,250.40</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Transactions</h4>
+                                <p>47</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Actions -->
+                <section class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bolt"></i> Quick Actions
+                        </h3>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" id="quickTransfer">
+                            <i class="fas fa-paper-plane"></i> Send Money
+                        </button>
+                        <button class="quick-action-btn" id="quickBill">
+                            <i class="fas fa-file-invoice-dollar"></i> Pay Bill
+                        </button>
+                        <button class="quick-action-btn" id="quickCard">
+                            <i class="fas fa-credit-card"></i> Virtual Card
+                        </button>
+                        <button class="quick-action-btn" id="quickSupport">
+                            <i class="fas fa-headset"></i> Support
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Transactions -->
+                <section class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-history"></i> Recent Transactions
+                        </h3>
+                        <div class="transactions-controls">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="credit">Income</button>
+                            <button class="filter-btn" data-filter="debit">Expense</button>
+                        </div>
+                    </div>
+                    
+                    <div class="transactions-list" id="transactionsList">
+                        <!-- Transactions will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Recent Activity -->
+                <section class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bell"></i> Recent Activity
+                        </h3>
+                    </div>
+                    
+                    <div id="activityList">
+                        <div class="transaction-item">
+                            <div class="transaction-info">
+                                <div class="transaction-icon" style="background: var(--primary-blue);">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <h4>Security Updated</h4>
+                                    <p>2FA enabled • Today</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="transaction-item">
+                            <div class="transaction-info">
+                                <div class="transaction-icon" style="background: var(--warning);">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <h4>Reward Claimed</h4>
+                                    <p>50 loyalty points • Yesterday</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 LaaniPay. All rights reserved. | Secure Banking Platform</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Fund Wallet Modal -->
+    <div class="modal" id="fundWalletModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Fund Your Wallet</h3>
+                <button class="close-modal" id="closeFundModal">&times;</button>
+            </div>
+            
+            <form id="fundWalletForm">
+                <div class="form-group">
+                    <label for="amount">Amount ($)</label>
+                    <input type="number" id="amount" min="10" max="10000" step="0.01" placeholder="Enter amount" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select id="paymentMethod" required>
+                        <option value="">Select method</option>
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="bank">Bank Transfer</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="cardDetailsGroup" style="display: none;">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelFundBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Buy Airtime Modal -->
+    <div class="modal" id="buyAirtimeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Buy Airtime</h3>
+                <button class="close-modal" id="closeAirtimeModal">&times;</button>
+            </div>
+            
+            <form id="buyAirtimeForm">
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" placeholder="Enter phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="networkProvider">Network Provider</label>
+                    <select id="networkProvider" required>
+                        <option value="">Select network</option>
+                        <option value="mtn">MTN</option>
+                        <option value="airtel">Airtel</option>
+                        <option value="glo">Glo</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="airtimeAmount">Amount ($)</label>
+                    <select id="airtimeAmount" required>
+                        <option value="">Select amount</option>
+                        <option value="5">$5</option>
+                        <option value="10">$10</option>
+                        <option value="20">$20</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="customAmountGroup" style="display: none;">
+                    <label for="customAmount">Custom Amount ($)</label>
+                    <input type="number" id="customAmount" min="1" max="500" step="0.01" placeholder="Enter amount">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelAirtimeBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Buy Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboardconst User = require("../models/User");
+const generateToken = require("../utils/generateToken");
+
+// Signup
+exports.signup = async (req, res) => {
+  try {
+    const { fullName, email, password } = req.body;
+    const userExists = await User.findOne({ email });
+    if (userExists) return res.status(400).json({ message: "Email already exists" });
+
+    const user = await User.create({ fullName, email, password });
+    res.status(201).json({
+      user: { id: user._id, email: user.email, fullName: user.fullName },
+      token: generateToken(user._id)
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Login
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+    res.json({
+      user: { id: user._id, email: user.email, fullName: user.fullName },
+      token: generateToken(user._id)
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const Wallet = require("../models/Wallet");
+
+// after creating user
+await Wallet.create({ user: user._id });
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('LaaniPay Dashboard Initialized');
+            
+            // Sample transaction data
+            const transactions = [
+                { id: 1, type: "credit", title: "Wallet Funding", description: "Bank Transfer • Today", amount: 500.00, icon: "fas fa-money-bill-wave" },
+                { id: 2, type: "debit", title: "Airtime Purchase", description: "MTN • Today", amount: 25.00, icon: "fas fa-mobile-alt" },
+                { id: 3, type: "debit", title: "Netflix", description: "Monthly • Yesterday", amount: 15.99, icon: "fas fa-film" },
+                { id: 4, type: "credit", title: "Refund", description: "Transaction • Oct 12", amount: 75.00, icon: "fas fa-undo" },
+                { id: 5, type: "debit", title: "Data Plan", description: "1GB • Oct 10", amount: 15.00, icon: "fas fa-wifi" },
+                { id: 6, type: "debit", title: "Amazon", description: "Shopping • Oct 8", amount: 89.99, icon: "fas fa-shopping-cart" },
+                { id: 7, type: "credit", title: "Received", description: "Jane Smith • Oct 5", amount: 200.00, icon: "fas fa-user-friends" }
+            ];
+
+            // DOM Elements
+            const elements = {
+                transactionsList: document.getElementById('transactionsList'),
+                fundWalletBtn: document.getElementById('fundWalletBtn'),
+                buyAirtimeBtn: document.getElementById('buyAirtimeBtn'),
+                editProfileBtn: document.getElementById('editProfileBtn'),
+                fundWalletModal: document.getElementById('fundWalletModal'),
+                buyAirtimeModal: document.getElementById('buyAirtimeModal'),
+                notification: document.getElementById('notification'),
+                notificationTitle: document.getElementById('notification-title'),
+                notificationMessage: document.getElementById('notification-message'),
+                fundWalletForm: document.getElementById('fundWalletForm'),
+                buyAirtimeForm: document.getElementById('buyAirtimeForm'),
+                paymentMethodSelect: document.getElementById('paymentMethod'),
+                cardDetailsGroup: document.getElementById('cardDetailsGroup'),
+                airtimeAmountSelect: document.getElementById('airtimeAmount'),
+                customAmountGroup: document.getElementById('customAmountGroup'),
+                quickTransfer: document.getElementById('quickTransfer'),
+                quickBill: document.getElementById('quickBill'),
+                quickCard: document.getElementById('quickCard'),
+                quickSupport: document.getElementById('quickSupport')
+            };
+
+            // Utility Functions
+            function showNotification(title, message, type = 'success') {
+                elements.notificationTitle.textContent = title;
+                elements.notificationMessage.textContent = message;
+                
+                // Set notification color based on type
+                const icon = elements.notification.querySelector('.notification-icon');
+                if (type === 'success') {
+                    icon.style.background = '#d1fae5';
+                    icon.style.color = '#10b981';
+                    elements.notification.style.borderLeftColor = '#10b981';
+                    icon.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (type === 'warning') {
+                    icon.style.background = '#fef3c7';
+                    icon.style.color = '#f59e0b';
+                    elements.notification.style.borderLeftColor = '#f59e0b';
+                    icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                } else {
+                    icon.style.background = '#fee2e2';
+                    icon.style.color = '#ef4444';
+                    elements.notification.style.borderLeftColor = '#ef4444';
+                    icon.innerHTML = '<i class="fas fa-times"></i>';
+                }
+                
+                elements.notification.classList.add('show');
+                setTimeout(() => {
+                    elements.notification.classList.remove('show');
+                }, 4000);
+            }
+
+            function openModal(modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal(modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Render Transactions
+            function renderTransactions(filter = 'all') {
+                elements.transactionsList.innerHTML = '';
+                
+                const filtered = filter === 'all' 
+                    ? transactions 
+                    : transactions.filter(t => t.type === filter);
+                
+                if (filtered.length === 0) {
+                    elements.transactionsList.innerHTML = `
+                        <div class="transaction-item">
+                            <div class="transaction-info">
+                                <div class="transaction-details">
+                                    <h4>No transactions found</h4>
+                                    <p>Try a different filter</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                filtered.forEach(transaction => {
+                    const item = document.createElement('div');
+                    item.className = `transaction-item ${transaction.type}`;
+                    item.innerHTML = `
+                        <div class="transaction-info">
+                            <div class="transaction-icon ${transaction.type}">
+                                <i class="${transaction.icon}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h4>${transaction.title}</h4>
+                                <p>${transaction.description}</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount ${transaction.type}">
+                            ${transaction.type === 'credit' ? '+' : '-'}$${transaction.amount.toFixed(2)}
+                        </div>
+                    `;
+                    elements.transactionsList.appendChild(item);
+                });
+            }
+
+            // Initialize Transactions
+            renderTransactions();
+
+            // Setup Filter Buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    renderTransactions(this.dataset.filter);
+                });
+            });
+
+            // Modal Event Listeners
+            elements.fundWalletBtn.addEventListener('click', () => openModal(elements.fundWalletModal));
+            elements.buyAirtimeBtn.addEventListener('click', () => openModal(elements.buyAirtimeModal));
+            
+            // Close buttons
+            document.getElementById('closeFundModal').addEventListener('click', () => closeModal(elements.fundWalletModal));
+            document.getElementById('closeAirtimeModal').addEventListener('click', () => closeModal(elements.buyAirtimeModal));
+            document.getElementById('cancelFundBtn').addEventListener('click', () => closeModal(elements.fundWalletModal));
+            document.getElementById('cancelAirtimeBtn').addEventListener('click', () => closeModal(elements.buyAirtimeModal));
+            
+            // Close modals on outside click
+            window.addEventListener('click', (e) => {
+                if (e.target === elements.fundWalletModal) closeModal(elements.fundWalletModal);
+                if (e.target === elements.buyAirtimeModal) closeModal(elements.buyAirtimeModal);
+            });
+
+            // Form Logic
+            elements.paymentMethodSelect.addEventListener('change', function() {
+                elements.cardDetailsGroup.style.display = this.value === 'card' ? 'block' : 'none';
+            });
+
+            elements.airtimeAmountSelect.addEventListener('change', function() {
+                elements.customAmountGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+            });
+
+            // Form Submissions
+            elements.fundWalletForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const amount = parseFloat(document.getElementById('amount').value);
+                const method = document.getElementById('paymentMethod').value;
+                
+                if (!amount || amount < 10) {
+                    showNotification('Error', 'Please enter a valid amount (minimum $10)', 'error');
+                    return;
+                }
+                
+                if (!method) {
+                    showNotification('Error', 'Please select a payment method', 'error');
+                    return;
+                }
+                
+                // Simulate API call
+                setTimeout(() => {
+                    showNotification('Success!', `$${amount} added to your wallet via ${method}`, 'success');
+                    
+                    // Update UI
+                    const balanceEl = document.querySelector('.wallet-balance');
+                    const current = parseFloat(balanceEl.textContent.replace('$', ''));
+                    balanceEl.textContent = '$' + (current + amount).toFixed(2);
+                    
+                    // Add transaction
+                    transactions.unshift({
+                        id: transactions.length + 1,
+                        type: 'credit',
+                        title: 'Wallet Funding',
+                        description: `${method} • Just now`,
+                        amount: amount,
+                        icon: 'fas fa-money-bill-wave'
+                    });
+                    
+                    // Reset form and close modal
+                    this.reset();
+                    closeModal(elements.fundWalletModal);
+                    elements.cardDetailsGroup.style.display = 'none';
+                    
+                    // Re-render transactions
+                    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+                    renderTransactions(activeFilter);
+                }, 1500);
+            });
+
+            elements.buyAirtimeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const phone = document.getElementById('phoneNumber').value;
+                const network = document.getElementById('networkProvider').value;
+                let amount = document.getElementById('airtimeAmount').value;
+                
+                if (!phone || phone.length < 10) {
+                    showNotification('Error', 'Please enter a valid phone number', 'error');
+                    return;
+                }
+                
+                if (!network) {
+                    showNotification('Error', 'Please select a network provider', 'error');
+                    return;
+                }
+                
+                if (amount === 'custom') {
+                    amount = document.getElementById('customAmount').value;
+                }
+                
+                amount = parseFloat(amount);
+                
+                if (!amount || amount < 1) {
+                    showNotification('Error', 'Please enter a valid amount', 'error');
+                    return;
+                }
+                
+                // Simulate API call
+                setTimeout(() => {
+                    showNotification('Success!', `$${amount} airtime sent to ${phone}`, 'success');
+                    
+                    // Update UI
+                    const balanceEl = document.querySelector('.wallet-balance');
+                    const current = parseFloat(balanceEl.textContent.replace('$', ''));
+                    balanceEl.textContent = '$' + (current - amount).toFixed(2);
+                    
+                    // Add transaction
+                    transactions.unshift({
+                        id: transactions.length + 1,
+                        type: 'debit',
+                        title: 'Airtime Purchase',
+                        description: `${network} - ${phone} • Just now`,
+                        amount: amount,
+                        icon: 'fas fa-mobile-alt'
+                    });
+                    
+                    // Reset form and close modal
+                    this.reset();
+                    closeModal(elements.buyAirtimeModal);
+                    elements.customAmountGroup.style.display = 'none';
+                    
+                    // Re-render transactions
+                    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+                    renderTransactions(activeFilter);
+                }, 1500);
+            });
+
+            // Edit Profile
+            elements.editProfileBtn.addEventListener('click', () => {
+                showNotification('Coming Soon', 'Profile editing feature will be available in the next update', 'warning');
+            });
+
+            // Quick Actions
+            elements.quickTransfer.addEventListener('click', () => {
+                showNotification('Quick Transfer', 'Transfer feature coming soon', 'warning');
+            });
+
+            elements.quickBill.addEventListener('click', () => {
+                showNotification('Pay Bill', 'Redirecting to bill payment...', 'success');
+            });
+
+            elements.quickCard.addEventListener('click', () => {
+                showNotification('Virtual Card', 'Generating virtual card...', 'success');
+            });
+
+            elements.quickSupport.addEventListener('click', () => {
+                showNotification('Support', 'Connecting you with our support team...', 'success');
+            });
+
+            // User Profile Dropdown
+            document.getElementById('userProfile').addEventListener('click', () => {
+                showNotification('Profile', 'Profile menu options coming soon', 'warning');
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal(elements.fundWalletModal);
+                    closeModal(elements.buyAirtimeModal);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

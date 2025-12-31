@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LaaniPay | Login</title>
+    <link rel="shortcut icon" href="laani.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+
+
+
+    
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>login</h2>
+        <form action="#">
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email" required />
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Enter your password" required />
+            </div>            
+
+            <button type="submit">Login</button>
+            <p class="sign-up">
+                Don't have an account? <a href="signup.html">SignUp</a>
+            </p>
+        </form>
+    </div>
+
+    
+
+    <!-- <h2>Login to LaaniPay</h2>
+
+    <input type="email" id="loginEmail" placeholder="Email">
+    <br><br>
+    <input type="password" id="loginPassword" placeholder="Password">
+    <br><br>
+    <button id="loginBtn">Login</button>
+
+    <hr>
+
+    <h2>Create Account</h2>
+
+    <input type="text" id="signupName" placeholder="Full Name">
+    <br><br>
+    <input type="email" id="signupEmail" placeholder="Email">
+    <br><br>
+    <input type="password" id="signupPassword" placeholder="Password">
+    <br><br>
+    <button id="signupBtn">Sign Up</button> -->
+
+    <script>
+        // LOGIN → Dashboard
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+
+        // SIGNUP → Dashboard
+        document.getElementById('signupBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+
+</body>
+</html>
+
